@@ -2,3 +2,4 @@
 
 	* Initial version
 	* Added feature: Wrapper for t3lib_div::makeInstance/t3lib_div::makeInstanceClassName()
+	* Cleanup: Added PHPdoc comments and fixed typing error

@@ -24,9 +24,9 @@
 
 final class tx_deprecated {
 	const TYPO3_branch = TYPO3_branch;
-	const INVOKATION_TemplateNew = 'return new %s(%s);';
-	const INVOKATION_TemplateMakeInstanceSimple = 'return t3lib_div::makeInstance(\'%s\');';
-	const INVOKATION_TemplateMakeInstanceArguments = 'return t3lib_div::makeInstance(\'%s\', %s);';
+	const INVOCATION_TemplateNew = 'return new %s(%s);';
+	const INVOCATION_TemplateMakeInstanceSimple = 'return t3lib_div::makeInstance(\'%s\');';
+	const INVOCATION_TemplateMakeInstanceArguments = 'return t3lib_div::makeInstance(\'%s\', %s);';
 
 	/**
 	 * Makes and instance of a class name.
@@ -46,23 +46,32 @@ final class tx_deprecated {
 
 		if (version_compare(self::TYPO3_branch, '4.3', '<')) {
 			$objectClassName = t3lib_div::makeInstanceClassName($className);
-			$invokation = self::getInvokation(
+			$invocation = self::getInvocation(
 				$objectClassName,
 				$arguments,
-				self::INVOKATION_TemplateNew
+				self::INVOCATION_TemplateNew
 			);
 		} else {
-			$invokation = self::getInvokation(
+			$invocation = self::getInvocation(
 				$className,
 				$arguments,
-				(count($arguments) ? self::INVOKATION_TemplateMakeInstanceArguments : self::INVOKATION_TemplateMakeInstanceSimple)
+				(count($arguments) ? self::INVOCATION_TemplateMakeInstanceArguments : self::INVOCATION_TemplateMakeInstanceSimple)
 			);
 		}
 
-		return $invokation($arguments);
+		return $invocation($arguments);
 	}
 
-	static private function getInvokation($className, array $arguments, $invokationTemplate) {
+	/**
+	 * Gets an invocation to create a new instance of an object.
+	 *
+	 * @param	string		$className: The name of the class to be created
+	 * @param	array		$arguments: Arguments to be forwared to the constructor
+	 * @param	string		$invocationTemplate: The template to be used inside create_function
+	 * @return	string		An anonymous function that creates a new instance of $classname
+	 * @see		create_function
+	 */
+	static private function getInvocation($className, array $arguments, $invocationTemplate) {
 		$constructorArguments = array();
 
 		$numberOfArguments = count($arguments);
@@ -73,7 +82,7 @@ final class tx_deprecated {
 
 		return create_function(
 			'$arguments',
-			sprintf($invokationTemplate, $className, implode(', ', $constructorArguments))
+			sprintf($invocationTemplate, $className, implode(', ', $constructorArguments))
 		);
 	}
 }
