@@ -1,0 +1,4 @@
+2009-08-12  Oliver Hader  <oliver@typo3.org>
+
+	* Initial version
+	* Added feature: Wrapper for t3lib_div::makeInstance/t3lib_div::makeInstanceClassName()
