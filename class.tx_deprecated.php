@@ -40,6 +40,7 @@ final class tx_deprecated {
 	 * @param	string		$className: Name of the class to be created
 	 * @return	object		The requested object
 	 * @since	TYPO3 4.3
+	 * @type	deprecated
 	 */
 	static public function makeInstance($className) {
 		$arguments = func_get_args();
@@ -60,6 +61,25 @@ final class tx_deprecated {
 		}
 
 		return $invocation($arguments);
+	}
+
+	/**
+	 * Fetches the permissions on file operations of the current user.
+	 * The behaviour was changed with TYPO3 4.3. Since then these permissions
+	 * are stored for backend user groups by default.
+	 *
+	 * @return	integer		File permission integer from BE_USER
+	 * @since	TYPO3 4.3
+	 * @type	behaviour
+	 */
+	static public function getFileoperationPermissions() {
+		if (version_compare(self::TYPO3_branch, '4.3', '<')) {
+			$fileoperationPermissions = $GLOBALS['BE_USER']->user['fileoper_perms'];
+		} else {
+			$fileoperationPermissions = $GLOBALS['BE_USER']->getFileoperationPermissions();
+		}
+
+		return $fileoperationPermissions;
 	}
 
 	/**

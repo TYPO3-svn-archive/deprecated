@@ -1,3 +1,7 @@
+2009-08-13  Oliver Hader  <oliver@typo3.org>
+
+	* Added feature: Wrapper to fetch permissions on file operations of backend users
+
 2009-08-12  Oliver Hader  <oliver@typo3.org>
 
 	* Initial version

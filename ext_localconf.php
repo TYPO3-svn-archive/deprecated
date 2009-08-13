@@ -5,3 +5,4 @@ if (!defined('TYPO3_MODE')) {
 
 define('PATH_tx_deprecated', t3lib_extMgm::extPath($_EXTKEY));
 require_once PATH_tx_deprecated . 'class.tx_deprecated.php';
+?>
